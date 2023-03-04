@@ -1,0 +1,329 @@
+
+<style>
+    .hero-content-section {
+        background-image: url("{{ wpage.acf.hero_section.image.url }}");
+        background-size: cover;
+        background-position: center center;
+        clip-path: polygon(30% 0%, 70% 0%, 100% 0, 100% 75%, 75% 100%, 0 100%, 0% 70%, 0 0);
+    }
+    .hero-img {
+        background-image: url('{{ wpage.acf.hero_section.image.url }}');
+        clip-path: polygon(0 0, 100% 0, 100% 30%, 100% 100%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+    }
+    .hero-section-box {
+        max-width: 89rem;
+    }
+</style>
+
+<div class="hero-section">
+    <div class="grid grid-cols-11 mx-auto hero-section-box">
+        <div class="relative col-span-11 sm:col-span-8 lg:col-span-6 ml-auto pt-48 sm:pt-56 pb-32 px-3 sm:px-6 lg:px-16 z-20 hero-content-section">
+            <div class="relative z-20">
+                <h1 class="text-5xl sm:text-4xl md:text-5xl xl:text-6xl text-cream-500 leading-none">{{ wpage.acf.hero_section.title | safe }}</h1>
+                <p class="text-base md:text-lg xl:text-xl 2xl:text-2xl font-thin text-cream-500 py-6 sm:pr-16 leading-normal">{{ wpage.acf.hero_section.paragraph }}</p>
+                <a 
+                    {% if wpage.acf.hero_section.button.link_to_where == "A page on this site" %}
+                    href='{{ wpage.acf.hero_section.button.onsite_link }}'
+                    {% elseif wpage.acf.hero_section.button.link_to_where == "Another site" %}
+                    href='{{ wpage.acf.hero_section.button.offsite_link }}' target='_blank'
+                    {% elseif wpage.acf.hero_section.button.link_to_where == "A file" %}
+                            href='{{ wpage.acf.hero_section.button.file_link }}' 
+                    target='_blank'
+                    {% endif %}
+                    >
+                    <button class="">{{ wpage.acf.hero_section.button.text }}</button>
+                </a>
+            </div>
+        </div>
+        <div class="hidden sm:block relative col-span-11 sm:col-span-3 lg:col-span-5 max-w-5xl bg-cover bg-no-repeat -mt-40 sm:-mt-0 sm:-mb-16 sm:-ml-32 py-40 sm:py-0 z-10 3xl:z-30 hero-img">
+    
+        </div>
+    </div>
+</div>
+
+<div class="grid grid-cols-12 max-w-7xl mx-auto pt-32 sm:pt-56 pb-32 px-3 md:px-8 xl:px-16">
+    <div class="col-span-12 md:col-span-4 pb-24 md:pb-0 pr-8 xl:pr-16">
+        <h2 class="text-5xl sm:text-4xl md:text-5xl text-green-500 leading-none">{{ wpage.acf.how_we_can_help_you_section.title | safe }}</h2>
+        <p class="text-lg text-gray-500 py-8 leading-normal">{{ wpage.acf.how_we_can_help_you_section.paragraph }}</p>
+        <a 
+            {% if wpage.acf.how_we_can_help_you_section.button.link_to_where == "A page on this site" %}
+            href='{{ wpage.acf.how_we_can_help_you_section.button.onsite_link }}'
+            {% elseif wpage.acf.how_we_can_help_you_section.button.link_to_where == "Another site" %}
+            href='{{ wpage.acf.how_we_can_help_you_section.button.offsite_link }}' target='_blank'
+            {% elseif wpage.acf.how_we_can_help_you_section.button.link_to_where == "A file" %}
+                    href='{{ wpage.acf.how_we_can_help_you_section.button.file_link }}' 
+            target='_blank'
+            {% endif %}
+            >
+            <button class="green-button">{{ wpage.acf.how_we_can_help_you_section.button.text }}</button>
+        </a>
+    </div>
+    <div class="col-span-12 md:col-span-8 pt-12 sm:pt-0">
+        {% for item in  wpage.acf.how_we_can_help_you_section.service %}
+        <div class="sm:flex items-end justify-between pb-2">
+            <h3 class="text-4xl text-green-500">{{ item.title }}</h3>
+            <a href="{{ item.link }}">
+            <button class="text-xs pl-0 text-button">{{ item.link_text }}</button>
+        </a>
+        </div>
+        <p class="text-base text-gray-500 pb-8 sm:pb-5">{{ item.paragraph }}</p>
+        {% endfor %}
+    </div>
+</div>
+
+{% include "global/where-weve-been.njk" %}
+
+<style>
+    .closed-deal-section {
+        background-color: #323F32;
+    }
+
+    .deals-slider {
+        max-height: 351px;
+        overflow-y: scroll;
+    }
+
+    .deals-slider::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .deals-slider::-webkit-scrollbar-track {
+        background: #e9ede9;
+    }
+
+    .deals-slider::-webkit-scrollbar-thumb {
+        background-color: #93aa93;
+        border-radius: 0px;
+        border: 0px solid #ffffff;
+    }
+
+    .color-deal {
+        background-color: #4b594b;
+    }
+
+    .deal-title {
+        font-family: commuters-sans, sans-serif;
+        font-size: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        color: #93AA93;
+        letter-spacing: 1.5px;
+    }
+
+    .deal-details {
+        font-family: 'Satoshi';
+        color: #EDEEE9;
+    }
+
+    .deal-scroll-top {
+        stroke-opacity: 0.8;
+        margin-right: -11.45px;
+        transition: 0.25s;
+    }
+
+    .deal-scroll-bottom {
+        stroke-opacity: 0.8;
+        margin-top: 10px;
+        margin-right: -11.45px;
+        transition: 0.25s;
+    }
+
+    .deal-scroll-top:hover {
+        stroke-opacity: 1;
+        cursor: pointer;
+        transition: 0.25s;
+    }
+
+    .deal-scroll-bottom:hover {
+        stroke-opacity: 1;
+        cursor: pointer;
+        transition: 0.25s;
+    }
+
+    .glide__bullet {
+        background-color: #E9EDE9;
+        width: 30px;
+        height: 2px;
+        padding: 0 !important;
+        margin: 5px !important;
+    }
+
+    .glide__bullet--active {
+        background-color: #93AA93;
+        width: 60px;
+        height: 4px;
+    }
+
+    .testimonial-name {
+        color: #93AA93;
+    }
+
+    .closed-deal-clip {
+        background-color: #323F32;
+        clip-path: polygon(0 0, 100% 0, 100% 30%, 100% 100%, 70% 100%, 10% 100%, 0% 50%, 0% 30%);
+        padding: 25px 0 25px 0;
+    }
+
+    .closed-deal-img {
+        background-image: url('{{ wpage.acf.closed_deal_section.image.url }}');
+        background-size: cover;
+        background-position: center center;
+        clip-path: polygon(20% 0%, 100% 0, 100% 20%, 100% 80%, 100% 100%, 20% 100%, 0% 80%, 0% 20%);
+    }
+
+    @media (min-width: 576px) {
+        .closed-deal-clip {
+            clip-path: polygon(0 0, 100% 0, 100% 30%, 100% 100%, 70% 100%, 10% 100%, 0% 50%, 0% 30%);
+        }
+    }
+</style>
+
+<div class="pt-12 closed-deal-section">
+    <div class="grid grid-cols-12 items-center max-w-7xl mx-auto px-3 md:px-8 xl:px-16">
+        <div class="col-span-12 md:col-span-5 pt-6 pb-24 md:pb-0 pr-8 xl:pr-16 order-last md:order-first">
+            <h2 class="text-4xl md:text-5xl text-cream-500 leading-none">{{ wpage.acf.closed_deal_section.title | safe }}</h2>
+            <!-- <p class="text-lg sm:text-xl text-cream-500 pt-4 pb-6 whitespace-pre-line">{{ wpage.acf.closed_deal_section.paragraph }}</p> -->
+            <h4 class="text-3xl lg:text-5xl text-cream-500 pt-12">{{ wpage.acf.closed_deal_section.running_total }}</h4>
+            <h3 class="font-thin uppercase text-cream-500">{{ wpage.acf.closed_deal_section.running_total_title }}</h3>
+            <!-- <a 
+                {% if wpage.acf.closed_deal_section.button.link_to_where == "A page on this site" %}
+                href='{{ wpage.acf.closed_deal_section.button.onsite_link }}'
+                {% elseif wpage.acf.closed_deal_section.button.link_to_where == "Another site" %}
+                href='{{ wpage.acf.closed_deal_section.button.offsite_link }}' target='_blank'
+                {% elseif wpage.acf.closed_deal_section.button.link_to_where == "A file" %}
+                        href='{{ wpage.acf.closed_deal_section.button.file_link }}' 
+                target='_blank'
+                {% endif %}
+                >
+                <button class="">{{ wpage.acf.closed_deal_section.button.text }}</button>
+            </a> -->
+        </div>
+        <div class="col-span-12 md:col-span-7 w-full sm:w-80 md:w-full mb-12 md:mb-0 py-32 md:py-64 order-first md:order-last closed-deal-img">
+
+        </div>
+        <!-- <div class="col-span-12 md:col-span-7">
+            <svg id="deal-scroll-top" class="mb-2 md:-mb-2 ml-auto deal-scroll-top" width="26" height="15" viewBox="0 0 26 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1 14.0001L13.0001 2.00012L25 14.0001" stroke="#EDEEE9" stroke-width="2"/>
+            </svg>
+            <div class="hidden md:grid grid-cols-12 items-start w-full pb-1">
+                <h5 class="col-span-5 pl-2 sm:pl-6 deal-title">Name</h5>
+                <h5 class="col-span-7 deal-title">Location</h5>
+            </div>
+            <div id="deals-slider" class="pr-4 md:pr-8 deals-slider">
+                {% for item in deals %}
+                <div class="md:grid grid-cols-12 items-start w-full {% if loop.index % 2 %}color-deal{% endif %} py-1 pl-2 sm:pl-6">
+                    <h6 class="col-span-5 pr-2 deal-details">{{ item.acf.name_of_property }}</h6>
+                    <h6 class="col-span-7 pr-2 deal-details">{{ item.acf.location }}</h6>
+                </div>
+                {% endfor %}
+            </div>
+            <svg id="deal-scroll-bottom" class="ml-auto deal-scroll-bottom" width="26" height="15" viewBox="0 0 26 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M25 1L12.9999 13L1 0.999999" stroke="#EDEEE9" stroke-width="2"/>
+            </svg>
+        </div> -->
+    </div>
+    <div class="max-w-7xl mx-auto pt-24 pb-12 px-3 md:px-8 xl:px-16 testimonial-section">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@glidejs/glide@3.5.x/dist/css/glide.core.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide@3.5.x"></script>
+        <h2 class="text-4xl sm:text-6xl text-cream-500 text-center">Testimonials</h2>
+        <div
+            x-data="{
+                init() {
+                    new Glide(this.$refs.glide, {
+                        type: 'carousel',
+                        perView: 3,
+                        breakpoints: {
+                            768: {
+                                perView: 1,
+                            },
+                            992: {
+                                perView: 2,
+                            }
+                        },
+                    }).mount()
+                },
+            }"
+        >
+        <div x-ref="glide" class="glide relative px-6">
+            <div class="glide__track" data-glide-el="track">
+                <ul class="glide__slides">
+                    {% for item in testimonials %}
+                    <div class="">
+                        <div class="">
+                            <p class="text-base text-cream-500 pt-8 pb-3 sm:pr-8 whitespace-pre-line">{{ item.acf.text | safe }}</p>
+                        </div>
+                        <h6 class="testimonial-name">- {{ item.acf.first_name }} {{ item.acf.last_name }}</h6>
+                    </div>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="hidden md:flex items-center w-full max-w-lg mx-auto pt-8" data-glide-el="controls">
+                <svg class="hover:cursor-pointer glide__arrow" width="15" height="25" viewBox="0 0 15 25" fill="none" xmlns="http://www.w3.org/2000/svg" data-glide-dir="<">
+                    <path d="M14 24.1892L2.40674 12.5958L14 1.00256" stroke="#EDEEE9" stroke-width="2"/>
+                </svg>
+                <div class="flex flex-wrap items-center h-full mx-auto glide__bullets" data-glide-el="controls[nav]">
+                    {% for item in testimonials %}
+                        <button class="glide__bullet" data-glide-dir="={{ loop.index0 }}"></button>
+                    {% endfor %}
+                </div>
+                <svg class="hover:cursor-pointer" width="15" height="25" viewBox="0 0 15 25" fill="none" xmlns="http://www.w3.org/2000/svg" data-glide-dir=">">
+                    <path d="M1 1.00269L12.5933 12.5961L1 24.1893" stroke="#EDEEE9" stroke-width="2" data-glide-dir=">"/>
+                </svg>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+<div class="closed-deal-clip"></div>
+
+<script>
+    const dealScrollTop = document.getElementById('deal-scroll-top');
+    const dealScrollBottom = document.getElementById('deal-scroll-bottom');
+    const dealSlider = document.getElementById('deals-slider');
+    dealScrollTop.addEventListener('click', function() {
+        dealSlider.scrollBy(0, -30)
+    });
+    dealScrollBottom.addEventListener('click', function() {
+        dealSlider.scrollBy(0, 30)
+    });
+</script>
+
+<style>
+    .about-img {
+        background-image: url('{{ wpage.acf.about_section.image.url }}');
+        clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0 100%, 0 0);
+    }
+</style>
+
+<div class="sm:grid grid-cols-12 items-start lg:items-center max-w-7xl mx-auto pt-40 pb-56">
+    <div class="col-span-5 md:col-span-4 mr-8 md:mr-0 py-40 lg:py-56 bg-center bg-cover about-img">
+
+    </div>
+    <div class="col-span-7 md:col-span-8 pt-12 md:pt-0 md:pl-20 px-3 md:px-8 xl:px-16">
+        <h2 class="text-4xl sm:text-6xl text-green-500 pb-5">{{ wpage.acf.about_section.title }}</h2>
+        <p class="text-lg text-gray-500 pb-5 leading-normal">{{ wpage.acf.about_section.paragraph }}</p>
+        <h4 class="text-2xs text-green-500 pt-2 pb-2 tag">{{ wpage.acf.about_section.commitment_title }}</h4>
+        <div class="lg:grid grid-cols-3">
+            {% for item in wpage.acf.about_section.commitment %}
+                <div class="pb-8 pr-6">
+                    <h5 class="text-3xl lg:text-xl xl:text-3xl text-green-500 pb-1">{{ item.title }}</h5>
+                    <p class="text-sm text-gray-500">{{ item.paragraph }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        <a 
+            {% if wpage.acf.about_section.button.link_to_where == "A page on this site" %}
+            href='{{ wpage.acf.about_section.button.onsite_link }}'
+            {% elseif wpage.acf.about_section.button.link_to_where == "Another site" %}
+            href='{{ wpage.acf.about_section.button.offsite_link }}' target='_blank'
+            {% elseif wpage.acf.about_section.button.link_to_where == "A file" %}
+                    href='{{ wpage.acf.about_section.button.file_link }}' 
+            target='_blank'
+            {% endif %}
+            >
+            <button class="green-button">{{ wpage.acf.about_section.button.text }}</button>
+        </a>
+    </div>
+</div>

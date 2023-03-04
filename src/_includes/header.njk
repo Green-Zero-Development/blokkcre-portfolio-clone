@@ -1,0 +1,134 @@
+{% set logos = [] %}
+{% set social = [] %}
+{% set address = [] %}
+{% set phone = [] %}
+{% set email = [] %}
+{% for item in globalData %}
+    {% if item.title == "Logos" %}
+        {% set logos = (logos.push({id: item.id, title: item.title, acf: item.acf}), logos) %}
+    {% elseif item.title == "Social Media Links" %}
+        {% set social = (social.push({id: item.id, title: item.title, acf: item.acf}), social) %}
+    {% elseif item.title == "Physical Addresses" %}
+        {% set address = (address.push({id: item.id, title: item.title, acf: item.acf}), address) %}
+    {% elseif item.title == "Contact Numbers" %}
+        {% set phone = (phone.push({id: item.id, title: item.title, acf: item.acf}), phone) %}
+    {% elseif item.title == "Emails" %}
+        {% set email = (email.push({id: item.id, title: item.title, acf: item.acf}), email) %}
+    {% endif %}
+{% endfor %}
+
+{% set mainMenu = [] %}
+{% set mobileMenu = [] %}
+{% for item in menus %}
+    {% if item.menu == "main-menu" %}
+        {% set mainMenu = (mainMenu.push({id: item.id, title: item.title, parentId: item.parent_id, url: item.url, children: item.children, order: item.order}), mainMenu) %}
+    {% elseif item.menu == "mobile-menu" %}
+        {% set mobileMenu = (mobileMenu.push({id: item.id, title: item.title, parentId: item.parent_id, url: item.url, children: item.children, order: item.order}), mobileMenu) %}
+    {% endif %}
+{% endfor %}
+
+<header x-data="{ mobileMenuTrig: false }">
+    <div id="header-container" class="flex flex-wrap w-full h-32 md:h-auto py-10 px-6 lg:px-16 header-container" x-data="{ {% for item in mainMenu %}{% if item.children|length %}dropdown{{ item.id }}: false, {% endif %}{% endfor %}dropdown: false }">
+        <div class="flex flex-wrap items-center justify-between w-full max-w-7xl mx-auto">
+            <div class="w-full md:w-1/3">
+                <a href="/">
+                    <img class="hidden md:block mr-auto site-logo" src="{{ logos[0].acf.logo.url }}" />
+                </a>
+                <a href="/">
+                    <img class="md:hidden mx-auto site-mobile-logo" src="{{ logos[0].acf.logo.url }}" />
+                </a>
+            </div>
+            <ul class="hidden relative md:flex w-2/3">
+                {% for item in mainMenu | sort(false, false, 'order') %}
+                    {% if item.children|length %}
+                        <li class="relative py-2 mr-8 xl:mr-16 li-with-drop menu-item {% if loop.last == true %}menu-last{% endif %} {% if item.order == "1" %}ml-auto{% endif %}" @mouseover="dropdown{{ item.id }} = true" @click="dropdown{{ item.id }} = true" @mouseleave="dropdown{{ item.id }} = false">
+                            <a href="{{ item.url }}" class="">{{ item.title }}</a><i class="pt-1 fas fa-angle-down"></i>
+                            <ul class="absolute left-0 flex flex-wrap w-full mt-2 dropdown" x-show="dropdown{{ item.id }}" x-transition x-cloak>
+                                {% for key, item1 in item.children %}
+                                    <a class="" href="{{ item1.url }}">
+                                        <li class="w-full li-in-drop menu-item">
+                                            {{ item1.title }}
+                                        </li>
+                                    </a>
+                                {% endfor %}
+                            </ul>
+                        </li>
+                    {% else %}
+                    <a href="{{ item.url }}" class="{% if loop.first %}ml-auto{% endif %}">
+                        <li class="py-2 {% if loop.last !== true %}mr-8 xl:mr-16{% endif %} li-no-drop menu-item {% if loop.last == true %}menu-last{% endif %}">
+                            {{ item.title }}
+                        </li>
+                    </a>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div id="mobile-menu" class="fixed top-0 left-0 w-full h-screen z-50 mobile-menu" x-show="mobileMenuTrig" x-cloak x-transition x-data="{ {% for item in menus.mobileMenu %}{% if item.children|length %}dropdown{{ item.ID }}: false, {% endif %}{% endfor %}dropdown: false }">
+        <ul id="mobile-items" class="flex flex-wrap w-full h-screen align-text-top mt-6 pt-10 pb-56 px-6 sm:px-16 overflow-scroll mobile-items">
+            <a href="/" class="mx-auto">
+                <img class="pb-8" src="{{ logos[0].acf.mobile_menu_logo.url }}" />
+            </a>
+            <div class="w-full py-5"></div>
+            {% for item in mobileMenu | sort(false, false, 'order') %}
+            {% if item.children|length %}
+                <li class="relative flex flex-wrap w-full justify-between pt-6 mobile-menu-single mobile-menu-with-children" x-on:click="dropdown{{ item.ID }} = !dropdown{{ item.ID }}">
+                    {{ item.title }}<i class="text-xl ml-auto mobile-children-icon fas fa-angle-down" :class="{ 'mobile-icon-active': dropdown{{ item.ID }} }"></i>
+                    <ul class="pt-3 pl-5 w-full" x-show="dropdown{{ item.ID }}" x-transition x-cloak>
+                        {% for key, item1 in item.children %}
+                        <a class="w-full pt-6" href="{{ item1.url }}" x-on:click="mobileMenuTrig = !mobileMenuTrig">
+                            <li class="text-4xl pb-5">{{ item1.title }}</li>
+                        </a>
+                        {% endfor %}
+                    </ul>
+                </li>
+            {% else %}
+                <a class="w-full" href="{{ item.url }}">
+                    <li class="pt-1 mobile-menu-single">{{ item.title }}</li>
+                </a>
+            {% endif %}
+            {% endfor %}
+            <div class="flex w-full mx-auto pt-12">
+                <!-- <a href="{% for item in social[0].acf.value_list %}{% if item.type == 'Linkedin' %}{{ item.value }}{% endif %}{% endfor %}" target="_blank">
+                    <svg class="mr-5" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <g clip-path="url(#clip0_2223_2453)">
+                        <path d="M26.8985 0H2.14462C0.958836 0 0 0.936142 0 2.09355V26.9495C0 28.1069 0.958836 29.0488 2.14462 29.0488H26.8985C28.0843 29.0488 29.0488 28.1069 29.0488 26.9552V2.09355C29.0488 0.936142 28.0843 0 26.8985 0ZM8.61818 24.7539H4.30625V10.8876H8.61818V24.7539ZM6.46221 8.99831C5.07786 8.99831 3.96016 7.88061 3.96016 6.50193C3.96016 5.12325 5.07786 4.00555 6.46221 4.00555C7.8409 4.00555 8.95859 5.12325 8.95859 6.50193C8.95859 7.87494 7.8409 8.99831 6.46221 8.99831ZM24.7539 24.7539H20.4476V18.0136C20.4476 16.408 20.4192 14.3372 18.2065 14.3372C15.9655 14.3372 15.6251 16.0903 15.6251 17.9002V24.7539H11.3245V10.8876H15.4548V12.7826H15.5116C16.0846 11.6933 17.4917 10.5415 19.5852 10.5415C23.9482 10.5415 24.7539 13.4124 24.7539 17.1456V24.7539Z" fill="#323F32"/>
+                        </g>
+                        <defs>
+                        <clipPath id="clip0_2223_2453">
+                        <rect width="29.0488" height="29.0488" fill="white"/>
+                        </clipPath>
+                        </defs>
+                    </svg>
+                </a>
+                <a href="{% for item in social[0].acf.value_list %}{% if item.type == 'Instagram' %}{{ item.value }}{% endif %}{% endfor %}" target="_blank">
+                    <svg class="mr-5" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M15 7.06767C16.2968 7.06767 17.5288 7.45671 18.6959 8.10512C19.863 8.75353 20.7708 9.66131 21.4192 10.8284C22.0676 11.9956 22.4567 13.2276 22.4567 14.5244C22.4567 15.886 22.0676 17.118 21.4192 18.2852C20.7708 19.4523 19.863 20.3601 18.6959 21.0085C17.5288 21.6569 16.2968 21.9811 15 21.9811C13.6383 21.9811 12.4063 21.6569 11.2392 21.0085C10.0721 20.3601 9.16428 19.4523 8.51587 18.2852C7.86746 17.118 7.54325 15.886 7.54325 14.5244C7.54325 13.2276 7.86746 11.9956 8.51587 10.8284C9.16428 9.66131 10.0721 8.75353 11.2392 8.10512C12.4063 7.45671 13.6383 7.06767 15 7.06767ZM15 19.3875C16.2968 19.3875 17.4639 18.9336 18.4365 17.961C19.3443 17.0532 19.863 15.886 19.863 14.5244C19.863 13.2276 19.3443 12.0604 18.4365 11.0878C17.4639 10.18 16.2968 9.66131 15 9.66131C13.6383 9.66131 12.4712 10.18 11.5634 11.0878C10.5908 12.0604 10.1369 13.2276 10.1369 14.5244C10.1369 15.886 10.5908 17.0532 11.5634 17.961C12.4712 18.9336 13.6383 19.3875 15 19.3875ZM24.5316 6.74346C24.5316 6.28958 24.3371 5.90053 24.0129 5.51148C23.6238 5.18728 23.2348 4.99276 22.7809 4.99276C22.2622 4.99276 21.8731 5.18728 21.5489 5.51148C21.1599 5.90053 21.0302 6.28958 21.0302 6.74346C21.0302 7.26219 21.1599 7.65124 21.5489 7.97544C21.8731 8.36449 22.2622 8.49417 22.7809 8.49417C23.2348 8.49417 23.6238 8.36449 23.948 7.97544C24.2722 7.65124 24.4668 7.26219 24.5316 6.74346ZM29.4595 8.49417C29.4595 9.72615 29.5243 11.7362 29.5243 14.5244C29.5243 17.3774 29.4595 19.3875 29.3947 20.6194C29.3298 21.8514 29.1353 22.8889 28.8759 23.7966C28.4869 24.8989 27.8385 25.8716 27.0604 26.6496C26.2823 27.4277 25.3097 28.0113 24.2722 28.4004C23.3645 28.7246 22.2622 28.9191 21.0302 28.9839C19.7982 29.0488 17.7881 29.0488 15 29.0488C12.147 29.0488 10.1369 29.0488 8.90491 28.9839C7.67294 28.9191 6.63548 28.7246 5.72771 28.3355C4.62541 28.0113 3.65279 27.4277 2.8747 26.6496C2.09661 25.8716 1.51304 24.8989 1.124 23.7966C0.799791 22.8889 0.605268 21.8514 0.540427 20.6194C0.475586 19.3875 0.475586 17.3774 0.475586 14.5244C0.475586 11.7362 0.475586 9.72615 0.540427 8.49417C0.605268 7.26219 0.799791 6.15989 1.124 5.25212C1.51304 4.21466 2.09661 3.24205 2.8747 2.46396C3.65279 1.68587 4.62541 1.03746 5.72771 0.64841C6.63548 0.389046 7.67294 0.194523 8.90491 0.129682C10.1369 0.064841 12.147 0 15 0C17.7881 0 19.7982 0.064841 21.0302 0.129682C22.2622 0.194523 23.3645 0.389046 24.2722 0.64841C25.3097 1.03746 26.2823 1.68587 27.0604 2.46396C27.8385 3.24205 28.4869 4.21466 28.8759 5.25212C29.1353 6.15989 29.3298 7.26219 29.4595 8.49417ZM26.3471 23.0834C26.6065 22.3701 26.7362 21.203 26.8659 19.582C26.8659 18.6742 26.9307 17.3125 26.9307 15.5618V13.4869C26.9307 11.7362 26.8659 10.3746 26.8659 9.46678C26.7362 7.84576 26.6065 6.67862 26.3471 5.96537C25.8284 4.66855 24.8558 3.69594 23.559 3.17721C22.8457 2.91784 21.6786 2.78816 20.0576 2.65848C19.0849 2.65848 17.7233 2.59364 16.0374 2.59364H13.9625C12.2118 2.59364 10.8501 2.65848 9.94237 2.65848C8.32135 2.78816 7.15421 2.91784 6.44096 3.17721C5.0793 3.69594 4.17152 4.66855 3.65279 5.96537C3.39343 6.67862 3.19891 7.84576 3.13407 9.46678C3.06923 10.4394 3.06923 11.8011 3.06923 13.4869V15.5618C3.06923 17.3125 3.06923 18.6742 3.13407 19.582C3.19891 21.203 3.39343 22.3701 3.65279 23.0834C4.17152 24.4451 5.14414 25.3528 6.44096 25.8716C7.15421 26.1309 8.32135 26.3254 9.94237 26.3903C10.8501 26.4551 12.2118 26.4551 13.9625 26.4551H16.0374C17.7881 26.4551 19.1498 26.4551 20.0576 26.3903C21.6786 26.3254 22.8457 26.1309 23.559 25.8716C24.8558 25.3528 25.8284 24.3802 26.3471 23.0834Z" fill="#323F32"/>
+                    </svg>
+                </a>
+                <a href="{% for item in social[0].acf.value_list %}{% if item.type == 'Facebook' %}{{ item.value }}{% endif %}{% endfor %}" target="_blank">
+                    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M29.9999 1.62102C29.9999 1.16714 29.8054 0.778092 29.4812 0.453887C29.157 0.194523 28.768 0 28.3789 0H2.5722C2.05347 0 1.66442 0.194523 1.40506 0.453887C1.08085 0.778092 0.951172 1.16714 0.951172 1.62102V27.4277C0.951172 27.8816 1.08085 28.2707 1.40506 28.5949C1.66442 28.9191 2.05347 29.0488 2.5722 29.0488H16.4482V17.7664H12.6874V13.4221H16.4482V10.18C16.4482 8.36449 16.9669 6.93799 18.0044 5.90053C19.0418 4.92792 20.4035 4.40919 22.0893 4.40919C23.3862 4.40919 24.5533 4.47403 25.4611 4.53887V8.49417H23.1268C22.2839 8.49417 21.7003 8.68869 21.3761 9.07774C21.1167 9.40194 20.987 9.92067 20.987 10.6339V13.4221H25.3314L24.7478 17.7664H20.987V29.0488H28.3789C28.8328 29.0488 29.2218 28.9191 29.546 28.5949C29.8054 28.2707 29.9999 27.8816 29.9999 27.4277V1.62102Z" fill="#323F32"/>
+                    </svg>
+                </a> -->
+            </div>
+            <div class="pt-8">
+                <!-- <address class="footer-address">
+                    {% for item in address[0].acf.value_list %}{% if item.type == 'Headquarters' %}{{ item.street }}
+                    <br />
+                    {{ item.city }}, {{ item.state }} {{ item.zip }}{% endif %}{% endfor %}
+                </address> -->
+                <div class="flex flex-wrap pt-4">
+                    <a href="tel:{% for item in phone[0].acf.value_list %}{% if item.type == "Primary" %}{{ item.value }}{% endif %}{% endfor %}" class="w-full footer-tel">
+                        {% for item in phone[0].acf.value_list %}{% if item.type == "Primary" %}{{ item.value }}{% endif %}{% endfor %}
+                    </a>
+                    <a href="mailto:{% for item in email[0].acf.value_list %}{% if item.type == "Primary" %}{{ item.value }}{% endif %}{% endfor %}" class="footer-email">
+                        {% for item in email[0].acf.value_list %}{% if item.type == "Primary" %}{{ item.value }}{% endif %}{% endfor %}
+                    </a>
+                </div>
+            </div>
+        </ul>
+    </div>
+    <img src="https://inside.blokkcre.com/wp-content/uploads/2022/07/Mobile-Hamburger.png"  id="mobile-menu-open" class="fixed md:hidden w-12 bottom-0 left-0 right-0 mb-12 mx-auto mobile-menu-open" x-on:click="mobileMenuTrig = ! mobileMenuTrig" :class="{ 'hidden': mobileMenuTrig }" />
+    <img src="https://inside.blokkcre.com/wp-content/uploads/2022/07/mobile-close.png" id="mobile-menu-close" class="fixed md:hidden w-12 bottom-0 left-0 right-0 mb-12 mx-auto mobile-menu-close" x-on:click="mobileMenuTrig = ! mobileMenuTrig" :class="{ 'hidden': !mobileMenuTrig }" />
+</header>

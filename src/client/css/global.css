@@ -1,0 +1,274 @@
+@import url("https://use.typekit.net/ark1wno.css");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: 'Satoshi';
+    font-weight: 400;
+    src: url("http://localhost:8080/fonts/Satoshi-Regular.woff") format("woff"), url("http://localhost:8080/fonts/Satoshi-Regular.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    font-weight: 200;
+    src: url("http://localhost:8080/fonts/Satoshi-Light.woff") format("woff"), url("http://localhost:8080/fonts/Satoshi-Light.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    font-weight: 700;
+    src: url("http://localhost:8080/fonts/Satoshi-Bold.woff") format("woff"), url("http://localhost:8080/fonts/Satoshi-Bold.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    font-weight: 400;
+    src: url("https://www.blokkcre.com/fonts/Satoshi-Regular.woff") format("woff"), url("https://www.blokkcre.com/fonts/Satoshi-Regular.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    font-weight: 200;
+    src: url("https://www.blokkcre.com/fonts/Satoshi-Light.woff") format("woff"), url("https://www.blokkcre.com/fonts/Satoshi-Light.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    font-weight: 700;
+    src: url("https://www.blokkcre.com/fonts/Satoshi-Bold.woff") format("woff"), url("https://www.blokkcre.com/fonts/Satoshi-Bold.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    font-weight: 400;
+    src: url("https://www.blokkcre.com/fonts/Satoshi-Regular.woff") format("woff"), url("https://www.blokkcre.com/fonts/Satoshi-Regular.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    font-weight: 200;
+    src: url("https://www.blokkcre.com/fonts/Satoshi-Light.woff") format("woff"), url("https:/www.blokkcre.com/fonts/Satoshi-Light.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: 'Satoshi';
+    font-weight: 700;
+    src: url("https://www.blokkcre.com/fonts/Satoshi-Bold.woff") format("woff"), url("https://www.blokkcre.com/fonts/Satoshi-Bold.woff2") format("woff2");
+}
+
+html {
+    background-color: #EDEEE9;
+    color: #191E19;
+}
+
+body {
+  
+}
+
+h1 {
+    font-family: 'Satoshi';
+}
+
+h2 {
+    font-family: 'Satoshi';
+}
+
+h3 {
+    font-family: 'Satoshi';
+}
+
+h4 {
+    font-family: 'Satoshi';
+}
+
+h5 {
+    font-family: 'Satoshi';
+}
+
+h6 {
+    font-family: 'Satoshi';
+}
+
+p {
+    font-family: 'Satoshi';
+}
+
+a {
+  
+}
+
+button {
+    background-color: #EDEEE9;
+    font-family: commuters-sans, sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: #323F32;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 6px 15px 4px 15px;
+    transition: 0.25s;
+}
+
+button:hover {
+    background-color: #bebeba;
+    transition: 0.25s;
+}
+
+.green-button {
+    background-color: #323F32;
+    color: #EDEEE9;
+    transition: 0.25s;
+}
+
+.green-button:hover {
+    background-color: #1e261e;
+    transition: 0.25s;
+}
+
+.text-button {
+    background-color: transparent;
+    color: #5F785F;
+}
+
+.text-button:hover {
+    background-color: transparent;
+    text-decoration: underline;
+}
+
+ul {
+
+}
+
+ol {
+
+}
+
+li {
+  
+}
+
+address {
+
+}
+
+blockquote {
+
+}
+
+code {
+
+}
+
+label {
+
+}
+
+input {
+
+}
+
+input::placeholder {
+  
+}
+
+textarea {
+
+}
+
+textarea::placeholder {
+  
+}
+
+select {
+
+}
+
+input[type="submit"] {
+  
+}
+
+img {
+  
+}
+
+.tag {
+    font-family: commuters-sans, sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+[x-cloak] { 
+    display: none !important; 
+}
+
+.swiper-pagination-bullet {
+    width: 30px;
+    height: 2px;
+    border-radius: 0px;
+    transition: 0.25s;
+}
+
+.swiper-pagination-bullet-active {
+    width: 60px;
+    height: 4px;
+    margin-bottom: -1px !important;
+    transition: 0.25s;
+}
+
+.testimonial-name {
+    font-family: commuters-sans, sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.hero-section-gradient {
+    background-color: rgba(50, 63, 50, 0.9);
+}
+
+.thank-you-section {
+    background-color: #323F32;
+}
+
+.state-single {
+    font-family: 'Satoshi';
+    color: #323F32;
+}
+
+@media (min-width: 416px) {
+   
+}
+
+@media (min-width: 576px) {
+    .hero-section-gradient {
+        display: none;
+    }
+    .hero-content-section {
+        background-image: none !important;
+        background-color: #323F32;
+    }
+}
+
+@media (min-width: 768px) {
+    
+}
+
+@media (min-width: 992px) {
+    
+}
+
+@media (min-width: 1200px) {
+    
+}
+
+@media (min-width: 1440px) {
+    
+}
+
+@media (min-width: 2000px) {
+    
+}

@@ -1,0 +1,56 @@
+{% set thisGlobalSection = [] %}
+{% for item in globalSections %}
+    {% if item.title == "Where we've been section" %}
+        {% set thisGlobalSection = (thisGlobalSection.push({id: item.id, acf: item.acf}), thisGlobalSection) %}
+    {% endif %}
+{% endfor %}
+
+<style>
+    .where-weve-been-section {
+        background-color: #d3d6c9;
+    }
+</style>
+
+<div class="where-weve-been-section">
+    <div class="grid grid-cols-12 gap-4 justify-evenly max-w-7xl mx-auto py-32 px-3 md:px-8 xl:px-16">
+        <div class="col-span-12 md:col-span-4 pb-24 md:pb-0 pr-8 xl:pr-16">
+            <h2 class="text-5xl sm:text-4xl md:text-5xl text-green-500 leading-none">{{ thisGlobalSection[0].acf.title }}</h2>
+            <p class="text-lg text-gray-500 py-8 leading-normal">{{ thisGlobalSection[0].acf.paragraph }}</p>
+            <a 
+                {% if thisGlobalSection[0].acf.button.link_to_where == "A page on this site" %}
+                href='{{ thisGlobalSection[0].acf.button.onsite_link }}'
+                {% elseif wpage.acf.how_we_can_help_you_section.button.link_to_where == "Another site" %}
+                href='{{ thisGlobalSection[0].acf.button.offsite_link }}' target='_blank'
+                {% elseif wpage.acf.how_we_can_help_you_section.button.link_to_where == "A file" %}
+                        href='{{ thisGlobalSection[0].acf.button.file_link }}' 
+                target='_blank'
+                {% endif %}
+                >
+                <button class="green-button">{{ thisGlobalSection[0].acf.button.text }}</button>
+            </a>
+        </div>
+        <div class="col-span-12 md:col-span-8 sm:grid grid-cols-12">
+            <ul class="col-span-12 sm:col-span-4">
+                {% for item in thisGlobalSection[0].acf.states %}
+                    {% if loop.index <= 6 %}
+                        <li class="text-3xl md:text-xl xl:text-3xl pb-2 state-single">{{ item }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul class="col-span-12 sm:col-span-4 pt-12 sm:pt-0">
+                {% for item in thisGlobalSection[0].acf.states %}
+                    {% if (loop.index > 6) and (loop.index <=12) %}
+                        <li class="text-3xl md:text-xl xl:text-3xl pb-2 state-single">{{ item }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul class="col-span-12 sm:col-span-4 pt-12 sm:pt-0">
+                {% for item in thisGlobalSection[0].acf.states %}
+                    {% if (loop.index > 12) and (loop.index <=18) %}
+                        <li class="text-3xl md:text-xl xl:text-3xl pb-2 state-single">{{ item }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>

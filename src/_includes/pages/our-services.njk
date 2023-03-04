@@ -1,0 +1,130 @@
+
+<style>
+    .hero-content-section {
+        background-image: url("{{ wpage.acf.hero_section.image.url }}");
+        background-size: cover;
+        background-position: center center;
+        clip-path: polygon(30% 0%, 70% 0%, 100% 0, 100% 75%, 75% 100%, 0 100%, 0% 70%, 0 0);
+    }
+    .hero-img {
+        background-image: url('{{ wpage.acf.hero_section.image.url }}');
+        clip-path: polygon(0 0, 100% 0, 100% 30%, 100% 100%, 70% 100%, 30% 100%, 0% 70%, 0% 30%);
+    }
+    .hero-section-box {
+        max-width: 89rem;
+    }
+</style>
+
+<div class="hero-section">
+    <div class="grid grid-cols-11 mx-auto hero-section-box">
+        <div class="relative col-span-11 sm:col-span-8 lg:col-span-6 ml-auto pt-48 sm:pt-56 pb-32 px-3 sm:px-6 lg:px-16 z-20 hero-content-section">
+            <div class="absolute top-0 left-0 w-full h-full hero-section-gradient"></div>
+            <div class="relative z-20">
+                <h1 class="text-5xl sm:text-4xl md:text-5xl xl:text-6xl text-cream-500 leading-none">{{ wpage.acf.hero_section.title | safe }}</h1>
+                <p class="text-base md:text-lg xl:text-xl 2xl:text-2xl font-thin text-cream-500 py-6 sm:pr-16 leading-normal">{{ wpage.acf.hero_section.paragraph }}</p>
+                <a 
+                    {% if wpage.acf.hero_section.button.link_to_where == "A page on this site" %}
+                    href='{{ wpage.acf.hero_section.button.onsite_link }}'
+                    {% elseif wpage.acf.hero_section.button.link_to_where == "Another site" %}
+                    href='{{ wpage.acf.hero_section.button.offsite_link }}' target='_blank'
+                    {% elseif wpage.acf.hero_section.button.link_to_where == "A file" %}
+                            href='{{ wpage.acf.hero_section.button.file_link }}' 
+                    target='_blank'
+                    {% endif %}
+                    >
+                    <button class="">{{ wpage.acf.hero_section.button.text }}</button>
+                </a>
+            </div>
+        </div>
+        <div class="hidden sm:block relative col-span-11 sm:col-span-3 lg:col-span-5 max-w-5xl bg-cover bg-left sm:bg-center bg-no-repeat -mt-48 sm:-mt-0 sm:-mb-16 sm:-ml-32 py-40 sm:py-0 z-10 3xl:z-30 hero-img">
+    
+        </div>
+    </div>
+</div>
+
+<div class="sm:pt-32 md:pt-16"></div>
+
+{% for item in wpage.acf.service %}
+{% if loop.index % 2 %}
+
+<style>
+    .service-img-{{ item.image.ID }} {
+        background-image: url('{{ item.image.url }}');
+        clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0 100%, 0 0);
+    }
+</style>
+
+<div id="{{ item.title }}" class="sm:grid grid-cols-12 items-start lg:items-center max-w-7xl mx-auto pt-32 pb-12">
+    <div class="col-span-4 mr-8 md:mr-0 py-40 lg:py-56 bg-center bg-cover service-img-{{ item.image.ID }}">
+
+    </div>
+    <div class="col-span-8 pt-12 md:pt-0 md:pl-20 px-3 md:px-8 xl:px-16">
+        <h2 class="text-4xl sm:text-6xl text-green-500 pb-5">{{ item.title }}</h2>
+        <p class="text-xl text-gray-500 pb-5">{{ item.paragraph }}</p>
+        <div class="lg:grid grid-cols-3">
+            {% for item2 in item.subservice %}
+                <div class="pb-8 pr-6">
+                    <h5 class="text-3xl lg:text-xl xl:text-3xl text-green-500 pb-1">{{ item2.title }}</h5>
+                    <p class="text-sm text-gray-500">{{ item2.paragraph }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        <a 
+            {% if item.button.link_to_where == "A page on this site" %}
+            href='{{ item.button.onsite_link }}'
+            {% elseif item.button.link_to_where == "Another site" %}
+            href='{{ item.button.offsite_link }}' target='_blank'
+            {% elseif item.button.link_to_where == "A file" %}
+                    href='{{ item.button.file_link }}' 
+            target='_blank'
+            {% endif %}
+            >
+            <button class="green-button">{{ item.button.text }}</button>
+        </a>
+    </div>
+</div>
+
+{% else %}
+
+<style>
+    .service-img-{{ item.image.ID }} {
+        background-image: url('{{ item.image.url }}');
+        clip-path: polygon(20% 0%, 100% 0, 100% 20%, 100% 80%, 100% 100%, 20% 100%, 0% 80%, 0% 20%);
+    }
+</style>
+
+<div id="{{ item.title }}" class="grid grid-cols-12 items-start lg:items-center max-w-7xl mx-auto pt-32 pb-12">
+    <div class="col-span-12 sm:col-span-8 order-last sm:order-first pt-12 md:pt-0 md:pr-20 px-3 md:px-8 xl:px-16">
+        <h2 class="text-4xl sm:text-6xl text-green-500 pb-5">{{ item.title }}</h2>
+        <p class="text-xl text-gray-500 pb-5">{{ item.paragraph }}</p>
+        <div class="lg:grid grid-cols-3">
+            {% for item2 in item.subservice %}
+                <div class="pb-8 pr-6">
+                    <h5 class="text-3xl lg:text-xl xl:text-3xl text-green-500 pb-1">{{ item2.title }}</h5>
+                    <p class="text-sm text-gray-500">{{ item2.paragraph }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        <a 
+            {% if item.button.link_to_where == "A page on this site" %}
+            href='{{ item.button.onsite_link }}'
+            {% elseif item.button.link_to_where == "Another site" %}
+            href='{{ item.button.offsite_link }}' target='_blank'
+            {% elseif item.button.link_to_where == "A file" %}
+                    href='{{ item.button.file_link }}' 
+            target='_blank'
+            {% endif %}
+            >
+            <button class="green-button">{{ item.button.text }}</button>
+        </a>
+    </div>
+    <div class="col-span-12 sm:col-span-4 ml-8 md:ml-0 py-40 lg:py-56 bg-center bg-cover service-img-{{ item.image.ID }}">
+
+    </div>
+</div>
+
+{% endif %}
+
+{% endfor %}
+
+<div class="py-12"></div>

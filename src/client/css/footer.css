@@ -1,0 +1,127 @@
+
+footer {
+    background-color: #192019;
+    color: #EDEEE9;
+}
+
+.footer-copyright-border {
+    border-top: solid 1px #5F785F;
+}
+
+.footer-address {
+    font-family: commuters-sans, sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 12px;
+}
+
+.footer-tel {
+    font-family: commuters-sans, sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.footer-tel:hover {
+    text-decoration: underline;
+}
+
+.footer-email {
+    font-family: commuters-sans, sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.footer-email:hover {
+    text-decoration: underline;
+}
+
+.footer-social-icons svg {
+    fill: #EDEEE9;
+    transition: 0.25s;
+}
+
+.footer-social-icons svg:hover {
+    fill: #bebeba;
+    transition: 0.25s;
+}
+
+.footer_top-title {
+    font-family: commuters-sans, sans-serif;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #B9BDAA;
+}
+
+.footer_top-title:hover {
+    text-decoration: underline;
+}
+
+.footer_child-title {
+    font-family: 'Satoshi';
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #EDEEE9;
+}
+
+.footer_child-title:hover {
+    text-decoration: underline;
+}
+
+.footer-contact-button {
+    background-color: #EDEEE9;
+    font-family: commuters-sans, sans-serif;
+    font-weight: 600;
+    color: #323F32;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 7px 18px 5px 18px;
+}
+
+.copyright-text {
+    font-family: commuters-sans, sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #B9BDAA;
+}
+
+.pioneer-text {
+    font-family: commuters-sans, sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #B9BDAA;
+    text-decoration: underline;
+}
+
+@media (min-width: 416px) {
+   
+}
+
+@media (min-width: 576px) {
+    
+}
+
+@media (min-width: 768px) {
+    
+}
+
+@media (min-width: 992px) {
+    
+}
+
+@media (min-width: 1200px) {
+    
+}
+
+@media (min-width: 1440px) {
+    
+}
+
+@media (min-width: 2000px) {
+    
+}
